@@ -1,3 +1,4 @@
+### builder ###
 FROM golang:latest as builder
 WORKDIR /app
 COPY go.mod go.sum ./
@@ -6,6 +7,7 @@ COPY *.go ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o /main
 RUN adduser -u 10001 chamnan
 
+### app image ###
 FROM scratch
 WORKDIR /app
 COPY --from=builder /etc/passwd /etc/passwd
